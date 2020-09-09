@@ -34,15 +34,11 @@ function App() {
       const { comparison, swap } = animations[i];
       console.log(comparison, swap);
       setTimeout(() => {
-        // arrayBars[comparison[0]].style.backgroundColor = 'red';
-        // arrayBars[comparison[1]].style.backgroundColor = 'red';
         setTimeout(() => {
           arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
           arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
           arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
           arrayBars[swap[1]].textContent = `${array[swap[1]]}`;
-          // arrayBars[swap[0]].style.backgroundColor = 'green';
-          // arrayBars[swap[1]].style.backgroundColor = 'green';
         }, i * 10);
       }, i * 10);
     }
@@ -50,7 +46,66 @@ function App() {
 
   const quickSort = () => {};
   const heapSort = () => {};
-  const bubbleSort = () => {};
+
+  const bubbleSort = () => {
+    const animations = sortingAlgorithms.bubbleSort(array);
+    const arrayBars = document.querySelectorAll('.arrayContainer__bar');
+    for (let i = 0; i < animations.length; i++) {
+      const { /* comparison, */ swap } = animations[i];
+      setTimeout(() => {
+        setTimeout(() => {
+          if (swap) {
+            console.log(array[swap[0]], array[swap[1]]);
+            arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
+            arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
+            arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
+            arrayBars[swap[1]].textContent = `${array[swap[1]]}`;
+          } else {
+          }
+        }, i * 10);
+      }, i * 10);
+    }
+  };
+
+  const insertionSort = () => {
+    const animations = sortingAlgorithms.insertionSort(array);
+    const arrayBars = document.querySelectorAll('.arrayContainer__bar');
+    for (let i = 0; i < animations.length; i++) {
+      const { /* comparison, */ swap } = animations[i];
+      setTimeout(() => {
+        setTimeout(() => {
+          if (swap) {
+            console.log(array[swap[0]], array[swap[1]]);
+            arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
+            arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
+            arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
+            arrayBars[swap[1]].textContent = `${array[swap[1]]}`;
+          } else {
+          }
+        }, i * 10);
+      }, i * 10);
+    }
+  };
+
+  const selectionSort = () => {
+    const animations = sortingAlgorithms.selectionSort(array);
+    const arrayBars = document.querySelectorAll('.arrayContainer__bar');
+    for (let i = 0; i < animations.length; i++) {
+      const { /* comparison, */ swap } = animations[i];
+      setTimeout(() => {
+        setTimeout(() => {
+          if (swap) {
+            console.log(array[swap[0]], array[swap[1]]);
+            arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
+            arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
+            arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
+            arrayBars[swap[1]].textContent = `${array[swap[1]]}`;
+          } else {
+          }
+        }, i * 10);
+      }, i * 10);
+    }
+  };
 
   return (
     <div className="app">
@@ -67,6 +122,8 @@ function App() {
         <button onClick={() => quickSort()}>Quick Sort</button>
         <button onClick={() => heapSort()}>Heap Sort</button>
         <button onClick={() => bubbleSort()}>Bubble Sort</button>
+        <button onClick={() => insertionSort()}>Insertion Sort</button>
+        <button onClick={() => selectionSort()}>Selection Sort</button>
       </div>
       <div className="arrayContainer">
         {array.map((value, idx) => (
