@@ -48,19 +48,29 @@ function App() {
     setArray(array);
   };
 
-  const mergeSort = () => {
+  // blue at initial
+  // green at comparison
+  // red if swapabble
+  // green after swap
+  // purple after sort
+
+  const mergeSort = async () => {
     const animations = sortingAlgorithms.mergeSort(array);
     const arrayBars = document.querySelectorAll('.arrayContainer__bar');
     for (let i = 0; i < animations.length; i++) {
       const { /* comparison, */ swap } = animations[i];
-      setTimeout(() => {
-        setTimeout(() => {
-          arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
-          arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
-          arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
-          arrayBars[swap[1]].textContent = `${array[swap[1]]}`;
-        }, i * 10);
-      }, i * 10);
+      await sleep(i + 20);
+      arrayBars[swap[0]].style.backgroundColor = colors.red;
+      arrayBars[swap[1]].style.backgroundColor = colors.red;
+      arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
+      arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
+      if (array.length <= 20) {
+        arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
+        arrayBars[swap[1]].textContent = `${array[swap[1]]}`;
+      }
+      await sleep(i + 20);
+      arrayBars[swap[0]].style.backgroundColor = colors.green;
+      arrayBars[swap[1]].style.backgroundColor = colors.green;
     }
   };
 
@@ -75,11 +85,11 @@ function App() {
       const { comparison, swap } = animations[i];
       arrayBars[comparison[0]].style.backgroundColor = colors.green;
       arrayBars[comparison[1]].style.backgroundColor = colors.green;
-      await sleep(1000);
+      await sleep(i * 10);
       if (swap && swap[0] !== swap[1]) {
         arrayBars[swap[0]].style.backgroundColor = colors.red;
         arrayBars[swap[1]].style.backgroundColor = colors.red;
-        await sleep(1000);
+        await sleep(i * 10);
         [originalArrayCopy[swap[0]], originalArrayCopy[swap[1]]] = [
           originalArrayCopy[swap[1]],
           originalArrayCopy[swap[0]],
@@ -92,7 +102,7 @@ function App() {
         arrayBars[comparison[0]].style.backgroundColor = colors.blue;
         arrayBars[comparison[1]].style.backgroundColor = colors.blue;
       }
-      await sleep(1000);
+      await sleep(i * 10);
       arrayBars[comparison[0]].style.backgroundColor = colors.purple;
       arrayBars[comparison[1]].style.backgroundColor = colors.purple;
     }
@@ -106,11 +116,11 @@ function App() {
       const { comparison, swap } = animations[i];
       arrayBars[comparison[0]].style.backgroundColor = colors.green;
       arrayBars[comparison[1]].style.backgroundColor = colors.green;
-      await sleep(1000);
+      await sleep(i * 10);
       if (swap && swap[0] !== swap[1]) {
         arrayBars[swap[0]].style.backgroundColor = colors.red;
         arrayBars[swap[1]].style.backgroundColor = colors.red;
-        await sleep(1000);
+        await sleep(i * 10);
         [originalArrayCopy[swap[0]], originalArrayCopy[swap[1]]] = [
           originalArrayCopy[swap[1]],
           originalArrayCopy[swap[0]],
@@ -123,7 +133,7 @@ function App() {
         arrayBars[comparison[0]].style.backgroundColor = colors.blue;
         arrayBars[comparison[1]].style.backgroundColor = colors.blue;
       }
-      await sleep(1000);
+      await sleep(i * 10);
       arrayBars[comparison[0]].style.backgroundColor = colors.purple;
       arrayBars[comparison[1]].style.backgroundColor = colors.purple;
     }
@@ -140,11 +150,11 @@ function App() {
         arrayBars[comparison[0]].style.backgroundColor = colors.green;
         arrayBars[comparison[1]].style.backgroundColor = colors.green;
       }
-      await sleep(1000);
+      await sleep(i * 10);
       if (swap && swap[0] !== swap[1]) {
         arrayBars[swap[0]].style.backgroundColor = colors.red;
         arrayBars[swap[1]].style.backgroundColor = colors.red;
-        await sleep(1000);
+        await sleep(i * 10);
         [originalArrayCopy[swap[0]], originalArrayCopy[swap[1]]] = [
           originalArrayCopy[swap[1]],
           originalArrayCopy[swap[0]],
@@ -159,7 +169,7 @@ function App() {
           arrayBars[comparison[1]].style.backgroundColor = colors.blue;
         }
       }
-      await sleep(1000);
+      await sleep(i * 10);
       if (comparison) {
         arrayBars[comparison[0]].style.backgroundColor = colors.purple;
         arrayBars[comparison[1]].style.backgroundColor = colors.purple;
@@ -194,7 +204,7 @@ function App() {
           <div
             className="arrayContainer__bar"
             style={{ height: `${value}px`, backgroundColor: colors.blue }}
-            key={idx}
+            key={idx + value}
           >
             {array.length <= 20 && value}
           </div>
