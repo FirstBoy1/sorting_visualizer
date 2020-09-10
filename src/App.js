@@ -204,7 +204,7 @@ function App() {
           <div
             className="arrayContainer__bar"
             style={{ height: `${value}px`, backgroundColor: colors.blue }}
-            key={idx + value}
+            key={`${idx}${value}${Date.now()}`}
           >
             {array.length <= 20 && value}
           </div>
