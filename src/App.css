@@ -14,7 +14,8 @@
 .arrayContainer__bar {
   width: fit-content;
   margin: 0 2px;
-  background-color: lightgray;
-  /* color: #f9f9f9; */
-  color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  background-color: #40a8c4;
+  color: white;
+  transition: all 100ms linear;
 }

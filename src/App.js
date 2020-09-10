@@ -3,9 +3,30 @@ import React, { useState, useEffect } from 'react';
 import * as sortingAlgorithms from './sortingAlgorithms';
 import './App.css';
 
+// START UTILS
+
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// blue at initial
+// green at comparison
+// red if swapabble
+// green after swap
+// purple after sort
+
+const colors = {
+  red: '#ff4b5c',
+  green: '#28df99',
+  blue: '#40a8c4',
+  purple: '#d291bc',
+};
+
+// END UTILS
 
 function App() {
   const [array, setArray] = useState([]);
@@ -31,10 +52,11 @@ function App() {
     const animations = sortingAlgorithms.mergeSort(array);
     const arrayBars = document.querySelectorAll('.arrayContainer__bar');
     for (let i = 0; i < animations.length; i++) {
-      const { comparison, swap } = animations[i];
-      console.log(comparison, swap);
+      const { /* comparison, */ swap } = animations[i];
       setTimeout(() => {
+        console.log('first setTimeout');
         setTimeout(() => {
+          console.log('second setTimeout');
           arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
           arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
           arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
@@ -47,23 +69,34 @@ function App() {
   const quickSort = () => {};
   const heapSort = () => {};
 
-  const bubbleSort = () => {
+  const bubbleSort = async () => {
+    const originalArrayCopy = [...array];
     const animations = sortingAlgorithms.bubbleSort(array);
     const arrayBars = document.querySelectorAll('.arrayContainer__bar');
     for (let i = 0; i < animations.length; i++) {
-      const { /* comparison, */ swap } = animations[i];
-      setTimeout(() => {
-        setTimeout(() => {
-          if (swap) {
-            console.log(array[swap[0]], array[swap[1]]);
-            arrayBars[swap[0]].style.height = `${array[swap[0]]}px`;
-            arrayBars[swap[1]].style.height = `${array[swap[1]]}px`;
-            arrayBars[swap[0]].textContent = `${array[swap[0]]}`;
-            arrayBars[swap[1]].textContent = `${array[swap[1]]}`;
-          } else {
-          }
-        }, i * 10);
-      }, i * 10);
+      const { comparison, swap } = animations[i];
+      arrayBars[comparison[0]].style.backgroundColor = colors.green;
+      arrayBars[comparison[1]].style.backgroundColor = colors.green;
+      await sleep(1000);
+      if (swap && swap[0] !== swap[1]) {
+        arrayBars[swap[0]].style.backgroundColor = colors.red;
+        arrayBars[swap[1]].style.backgroundColor = colors.red;
+        await sleep(1000);
+        [originalArrayCopy[swap[0]], originalArrayCopy[swap[1]]] = [
+          originalArrayCopy[swap[1]],
+          originalArrayCopy[swap[0]],
+        ];
+        arrayBars[swap[0]].style.height = `${originalArrayCopy[swap[0]]}px`;
+        arrayBars[swap[1]].style.height = `${originalArrayCopy[swap[1]]}px`;
+        arrayBars[swap[0]].textContent = `${originalArrayCopy[swap[0]]}`;
+        arrayBars[swap[1]].textContent = `${originalArrayCopy[swap[1]]}`;
+      } else {
+        arrayBars[comparison[0]].style.backgroundColor = colors.blue;
+        arrayBars[comparison[1]].style.backgroundColor = colors.blue;
+      }
+      await sleep(1000);
+      arrayBars[comparison[0]].style.backgroundColor = colors.purple;
+      arrayBars[comparison[1]].style.backgroundColor = colors.purple;
     }
   };
 
@@ -129,10 +162,10 @@ function App() {
         {array.map((value, idx) => (
           <div
             className="arrayContainer__bar"
-            style={{ height: `${value}px`, backgroundColor: 'lightgray' }}
+            style={{ height: `${value}px` }}
             key={idx}
           >
-            {value}
+            {array.length <= 20 && value}
           </div>
         ))}
       </div>

@@ -1,15 +1,21 @@
 // Bubble Sort
 export function bubbleSort(arr) {
   const animations = [];
-  for (let i = 0; i < arr.length - 1; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      const animation = { comparison: [i, j] };
-      if (arr[j] < arr[i]) {
-        animation.swap = [i, j];
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+  let isSorted = false;
+  let counter = 0;
+
+  while (!isSorted) {
+    isSorted = true;
+    for (let i = 0; i < arr.length - 1 - counter; i++) {
+      const animation = { comparison: [i, i + 1] };
+      if (arr[i + 1] < arr[i]) {
+        animation.swap = [i + 1, i];
+        [arr[i + 1], arr[i]] = [arr[i], arr[i + 1]];
+        isSorted = false;
       }
       animations.push(animation);
     }
+    counter += 1;
   }
 
   return animations;
