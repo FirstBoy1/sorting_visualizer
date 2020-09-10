@@ -43,6 +43,7 @@ export function selectionSort(arr) {
   for (let i = 0; i < arr.length; i++) {
     let swapIdx = i;
     for (let j = i; j < arr.length; j++) {
+      animations.push({ comparison: [j, swapIdx] });
       if (arr[j] < arr[swapIdx]) swapIdx = j;
     }
     animations.push({ swap: [i, swapIdx] });
